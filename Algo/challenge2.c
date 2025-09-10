@@ -4,7 +4,7 @@
 
 int main(){
     int tab[100];
-    int i,j,n,key,temp;
+    int i,j,n,key,cmp=1;
 
     printf("Entrer le nombre d'entites a entrer: ");
     scanf("%d",&n);
@@ -19,16 +19,14 @@ int main(){
         }
     printf("\n");
     
-    for(i=1; i<n ;i++){
-            key=tab[i];
-            if(key<tab[i-1]){
-                temp=tab[i-1];
-                tab[i-1]=key;
-                for(j=i-1; j<=0; j++){
-                    tab[j+1]=tab[j]; 
-                }
-            }
-   }                 
+    for(i = 1; i < n; i++) {
+        key = tab[i];
+        for(j = i - 1; j >= 0 && tab[j] > key; j--) {
+            tab[j + 1] = tab[j];
+        }
+
+        tab[j + 1] = key; 
+    }
     
     printf("Le tableau apres le tri est: \n");
     for(i=0;i<n;i++){
