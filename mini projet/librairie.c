@@ -1,5 +1,4 @@
 #include <stdio.h>
-<<<<<<< HEAD
 #include <string.h>
 
 int main() {
@@ -7,7 +6,7 @@ int main() {
     int Q[200];//Q désigne le tableau des quantité en stock
     float P[200];//P désigne le tableau des prix des livres 
     int i,n,j,s=0, choix, compt1=0;
-=======
+=
 
 int main() {
     char T[100], A[100];//T désigne le tableau des titres et A pour les tableau des autreur respectives des livres

@@ -3,7 +3,8 @@
 int Somme (int a, int b){
     printf("entrer a et b :");
     scanf("%d %d", &a,&b);
-    return a+b;
+    int som=a+b;
+    return som;
 }
 int main() {
     int a,b;
