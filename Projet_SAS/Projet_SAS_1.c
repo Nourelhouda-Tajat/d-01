@@ -1,17 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-/*Ajouter un joueur :
-Ajouter un nouveau joueur.
-Ajouter plusieurs joueurs en une seule opération.
-Un joueur est défini par :
-Un id unique: généré automatiquement pour identifier chaque joueur (évite les doublons).
-Son nom et prenom : strings pour stocker l’identité.
-numeroMaillot : un entier pour identifier le joueur sur le terrain.
-poste : permet de distinguer les rôles (gardien, défenseur, milieu, attaquant).
-age : utile pour les tris et statistiques.
-buts : nombre de buts marqués par le joueur.
-dateInscription (bonus) : fixée à l’ajout du joueur, non modifiable.
-statut (bonus) : indique si le joueur est "titulaire" ou "remplaçant". */
+#include <stddef.h>
+
 typedef struct
 {
     int id;
@@ -22,6 +12,7 @@ typedef struct
     int age;
     int but;
 } joueur;
+
 joueur ajouter_joueur()
 {
     int p, id = 10;
@@ -50,7 +41,7 @@ poste:
         strcpy(j.poste, "Milieu");
         break;
     default:
-        printf("!!!! Votre choix est invalide !!!! \n "); // veuillez de la liste du choix
+        printf("!!!! Votre choix est invalide !!!! \n ");
         goto poste;
         break;
     }
@@ -58,6 +49,7 @@ poste:
     scanf("%d", &j.age);
     printf("Entrer le nombre de but(s) marques par le joueur: \n");
     scanf("%d", &j.but);
+    j.id = id;
     id++;
     return j;
 }
@@ -66,56 +58,71 @@ int main()
 {
     int choix, c1, n, i, ind = 10;
     joueur j[100];
-Menu:
-    printf("********Gestion d une Equipe de Football******** \n");
-    printf("1. Ajouter un ou plusieurs joueur(s) \n");
-    printf("2. Afficher la liste de tous les joueurs \n");
-    printf("3. Rechercher un joueur \n");
-    printf("4. Modifier un joueur \n");
-    printf("5. Supprimer un joueur \n");
-    printf("6. Demander des statistiques \n");
-    printf("7. Quitter le menu \n");
-    printf("************************************************ \n");
-    printf("Entrer votre choix: ");
-    scanf("%d", &choix);
-    switch (choix)
-    {
-    case 1:
-    menu:
-        printf("*******Option d ajout de joueur(s)******* \n");
-        printf("1. Ajout d un joueur \n");
-        printf("2. Ajout de plusieurs joueurs à la fois \n");
-        printf("3. Retour au menu principal \n");
-        printf("***************************************** \n");
-        printf("Enter votre choix: ");
-        scanf("%d", choix);
+
+    do {
+    Menu:
+        printf("********Gestion d une Equipe de Football******** \n");
+        printf("1. Ajouter un ou plusieurs joueur(s) \n");
+        printf("2. Afficher la liste de tous les joueurs \n");
+        printf("3. Rechercher un joueur \n");
+        printf("4. Modifier un joueur \n");
+        printf("5. Supprimer un joueur \n");
+        printf("6. Demander des statistiques \n");
+        printf("7. Quitter le menu \n");
+        printf("************************************************ \n");
+        printf("Entrer votre choix: ");
+        scanf("%d", &choix);
+
         switch (choix)
         {
         case 1:
-            j[ind] = ajouter_joueur();
-            ind++;
+            do {
+            menu:
+                printf("*******Option d ajout de joueur(s)******* \n");
+                printf("1. Ajout d un joueur \n");
+                printf("2. Ajout de plusieurs joueurs à la fois \n");
+                printf("3. Retour au menu principal \n");
+                printf("***************************************** \n");
+                printf("Enter votre choix: ");
+                scanf("%d", &c1);
+
+                switch (c1)
+                {
+                case 1:
+                    j[ind] = ajouter_joueur();
+                    ind++;
+                    break;
+                case 2:
+                    printf("Entrer le nombre des joueurs voulu ajouter: ");
+                    scanf("%d", &n);
+                    for (i = ind; i < ind + n; i++)
+                    {
+                        j[i] = ajouter_joueur();
+                    }
+                    ind += n;
+                    break;
+                case 3:
+                    goto Menu;
+
+                default:
+                    printf("!!! Votre choix est invalide !!!  \n");
+                    goto menu;
+                    break;
+                }
+            } while (c1 != 3);
             break;
+
         case 2:
-            printf("Entrer le nombre des joueurs voulu ajouter: ");
-            scanf("%d", n);
-            for (i = ind; i < ind + n; i++)
-            {
-                j[i] = ajouter_joueur();
+            for (i = 10; i < ind; i++) {
+                printf("le nom du joueur est %s, son prenom %s, son id %d, son num de maillot %d, son poste %s, son numero de but est %d\n",
+                       j[i].nom, j[i].prenom, j[i].id, j[i].n_maillot, j[i].poste, j[i].but);
             }
-            ind += n;
             break;
-        case 3:
-            goto Menu;
 
         default:
-            printf("!!! Votre choix est invalide !!!  \n");
-            goto menu;
             break;
         }
+    } while (choix != 7);
 
-        break;
-
-    default:
-        break;
-    }
+    return 0;
 }
