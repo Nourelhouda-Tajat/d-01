@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include <stddef.h>
 
 typedef struct
 {
@@ -52,6 +51,19 @@ poste:
     j.id = id;
     id++;
     return j;
+}
+int recherche_par_nom (char trouveNom[50]){
+    int i;
+    char c;
+    for(i=0; i<cmpt; i++){
+        if(strcmp(trouveNom,equipe[i].nom)=0){
+            printf("Le joueur cherche correspond au joueur %d", equipe[i].id);
+            printf("Voulez-vous tous ces information (y/n)");
+            scanf("%c",c);
+            if(c='y')
+            printf("Le joueur recherche a comme ID: %d ||  son nom: %s || son prenom: %s || son numero de maillot : %d || son poste: %s || son age: %d || son score de buts: %d", equipe[i].id, equipe[i].nom, equipe[i].prenom, equipe[i].n_maillot, equipe[i].poste, equipe[i].age, equipe[i].but);
+        }
+    }
 }
 
 int main()
