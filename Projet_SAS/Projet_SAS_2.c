@@ -142,7 +142,7 @@ void affiche_ordre()
     {
         printf("Il n existe pas de joueur! \n");
     }
-    printf("*************La liste des joueurs par ordre alphabetique*************** ");
+    printf("*************La liste des joueurs par ordre alphabetique***************\n ");
     for (i = 0; i < cmpt - 1; i++)
     {
         for (j = 0; j < cmpt - i - 1; j++)
@@ -260,7 +260,7 @@ int recherche_par_nom()
 }
 int recherche_par_Id()
 {
-    int i, position, ind;
+    int i, position = 0, ind;
     printf("Entrer l identifiant du joueur a recherche :");
     scanf("%d", &ind);
     for (i = 0; i < cmpt; i++)
@@ -268,15 +268,14 @@ int recherche_par_Id()
         if (ind == equipe[i].id)
         {
             printf("Trouve son ID: %d ||  son nom: %s || son prenom: %s || son numero de maillot : %d || son poste: %s || son age: %d || son score de buts: %d", equipe[i].id, equipe[i].nom, equipe[i].prenom, equipe[i].n_maillot, equipe[i].poste, equipe[i].age, equipe[i].but);
-        }
-        else
-        {
-            printf("Cet identifiant ne figure pas dans cet equipe");
             break;
+            position = i;
+            
         }
-        position = i;
+        return position;
     }
-    return position;
+    printf("Cet identifiant ne figure pas dans cet equipe");
+    return -1;
 }
 void recherche_menu()
 {
@@ -309,9 +308,10 @@ void recherche_menu()
 void modifier_poste(int position)
 {
     int choix;
+poste:
     printf("Choisir le nouveau poste du joueur %d: \n 1. Gardien   ||   2. Attaquant   ||   3. Defenseur   ||   4. Milieu \n ", equipe[position].id);
     scanf("%d", &choix);
-poste:
+
     switch (choix)
     {
     case 1:
@@ -361,16 +361,25 @@ void modifier_menu()
         switch (choix)
         {
         case 1:
-            position = recherche_par_nom();
-            modifier_poste(position);
+            position = recherche_par_Id();
+            if (position >= 0 && position < cmpt)
+                modifier_poste(position);
+            else
+                printf("Joueur non trouve.\n");
             break;
         case 2:
-            position = recherche_par_nom();
-            modifier_age(position);
+            position = recherche_par_Id();
+            if (position >= 0 && position < cmpt)
+                modifier_age(position);
+            else
+                printf("Joueur non trouve.\n");
             break;
         case 3:
-            position = recherche_par_nom();
-            modifier_numbBut(position);
+            position = recherche_par_Id();
+            if (position >= 0 && position < cmpt)
+                modifier_numbBut(position);
+            else
+                printf("Joueur non trouve.\n");
             break;
         case 4:
             printf("Retour vers le menu principal");
@@ -400,6 +409,57 @@ void moyen_age()
     }
     printf("L age moyen des joureursde l equipe est : %d", total_age / (cmpt + 1));
 }
+void cmp_but()
+{
+    int i, n;
+    printf("Entrer le but sueil : ");
+    scanf("%d", &n);
+    for (i = 0; i < cmpt; i++)
+    {
+        if (n < equipe[i].but)
+        {
+            printf("|| %d  || %s  || %s  ||%d  || %s  || %d || %d ||\n", equipe[i].id, equipe[i].nom, equipe[i].prenom, equipe[i].n_maillot, equipe[i].poste, equipe[i].age, equipe[i].but);
+        }
+        else
+        {
+            printf("Il n existe pas de joueur ayant marque ce nombre de but");
+        }
+    }
+}
+
+void meilleur_buteur()
+{
+    int i, n;
+    for (i = 0; i < cmpt; i++)
+    {
+        if (equipe[i].but < equipe[i + 1].but)
+        {
+            n = i + 1;
+        }
+        else
+            n = i;
+    }
+    printf("Le meilleur buteur est :\n || %d  || %s  || %s  ||%d  || %s  || %d || %d ||\n", equipe[n].id, equipe[n].nom, equipe[n].prenom, equipe[n].n_maillot, equipe[n].poste, equipe[n].age, equipe[n].but);
+}
+void joueur_age_jeune()
+{
+    int i, min, max;
+    for (i = 0; i < cmpt; i++)
+    {
+        if (equipe[i].age < equipe[i + 1].age)
+        {
+            min = i;
+            max = i + 1;
+        }
+        else
+        {
+            min = i + 1;
+            max = i;
+        }
+    }
+    printf("Le meilleur buteur est :\n || %d  || %s  || %s  ||%d  || %s  || %d || %d ||\n", equipe[min].id, equipe[min].nom, equipe[min].prenom, equipe[min].n_maillot, equipe[min].poste, equipe[min].age, equipe[min].but);
+    printf("Le meilleur buteur est :\n || %d  || %s  || %s  ||%d  || %s  || %d || %d ||\n", equipe[max].id, equipe[max].nom, equipe[max].prenom, equipe[max].n_maillot, equipe[max].poste, equipe[max].age, equipe[max].but);
+}
 
 void statistique_menu()
 {
@@ -426,12 +486,16 @@ void statistique_menu()
             moyen_age();
             break;
         case 3:
+            cmp_but();
             break;
         case 4:
+            meilleur_buteur();
             break;
         case 5:
+            joueur_age_jeune();
             break;
         case 6:
+            printf("Retour vers le menu principal");
             break;
         default:
             printf(" !!!!! Votre choix est invalide !!!!!!!!!");
@@ -474,6 +538,9 @@ int main()
             break;
         case 5:
             supprime_par_id();
+            break;
+        case 6:
+            statistique_menu();
             break;
 
         default:
