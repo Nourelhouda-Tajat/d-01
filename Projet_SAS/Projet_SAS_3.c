@@ -29,16 +29,17 @@ void initialisationJoueur()
 {
     int i;
     joueur init_joueur[10] = {
-        {1, "Messi", "Lionel", 10, "Attaquant", 38, 800},
-        {2, "Ronaldo", "Cristiano", 7, "Attaquant", 40, 850},
-        {3, "Mbappé", "Kylian", 5, "Attaquant", 26, 250},
-        {4, "ModriC", "Luka", 3, "Milieu", 39, 50},
-        {5, "De_Bruyne", "Kevin", 17, "Milieu", 34, 100},
-        {6, "Van_Dijk", "Virgil", 4, "Defenseur", 34, 20},
-        {7, "Hakimi", "Achraf", 2, "Defenseur", 26, 15},
-        {8, "Courtois", "Thibaut", 1, "Gardien", 33, 0},
-        {9, "Haaland", "Erling", 8, "Attaquant", 25, 200},
-        {10, "Benzema", "Karim", 9, "Attaquant", 37, 450}};
+        {1, "ronaldo", "cristiano", 7, "attaquant", 40, 72},
+        {2, "messi", "lionel", 10, "attaquant", 38, 64},
+        {3, "vieira", "marcelo", 12, "defenseur", 37, 28},
+        {4, "ramos", "sergio", 4, "defenseur", 40, 42},
+        {5, "kroos", "toni", 8, "milieu", 35, 23},
+        {6, "iniesta", "andres", 6, "milieu", 41, 32},
+        {7, "debruyne", "kevin", 17, "milieu", 34, 36},
+        {8, "casillas", "iker", 1, "guardien", 44, 3},
+        {9, "mbappe", "kylien", 9, "attaquant", 25, 58},
+        {10, "alves", "dani", 2, "defenseur", 42, 36},
+    };
     for (i = 0; i < 10; i++)
     {
         equipe[cmpt++] = init_joueur[i];
@@ -113,7 +114,7 @@ void ajout_menu()
             }
             break;
         case 3:
-            printf("Retour vers le menu principal");
+            printf("Retour vers le menu principal\n");
 
         default:
             printf("!!! Votre choix est invalide !!!  \n");
@@ -252,7 +253,7 @@ void affichage_menu()
             affiche_poste_ordre();
             break;
         case 5:
-            printf("Retour vers le menu principal");
+            printf("Retour vers le menu principal\n");
             break;
         default:
             printf("!!!!!! Votre choix est invalide !!!!! \n");
@@ -275,7 +276,7 @@ int recherche_par_nom()
             return i;
         }
     }
-    printf("Ce nom ne figure pas dans cet equipe");
+    printf("Ce nom ne figure pas dans cet equipe\n");
     return -1;
 }
 int recherche_par_Id()
@@ -287,12 +288,12 @@ int recherche_par_Id()
     {
         if (ind == equipe[i].id)
         {
-            printf("Trouve");
-            printf("son ID: %d ||  son nom: %s || son prenom: %s || son numero de maillot : %d || son poste: %s || son age: %d || son score de buts: %d", equipe[i].id, equipe[i].nom, equipe[i].prenom, equipe[i].n_maillot, equipe[i].poste, equipe[i].age, equipe[i].but);
+            printf("Trouve\n");
+            printf("son ID: %d ||  son nom: %s || son prenom: %s || son numero de maillot : %d || son poste: %s || son age: %d || son score de buts: %d\n", equipe[i].id, equipe[i].nom, equipe[i].prenom, equipe[i].n_maillot, equipe[i].poste, equipe[i].age, equipe[i].but);
             return i;
         }
     }
-    printf("Cet identifiant ne figure pas dans cet equipe");
+    printf("Cet identifiant ne figure pas dans cet equipe\n");
     return -1;
 }
 void recherche_menu()
@@ -316,10 +317,10 @@ void recherche_menu()
             recherche_par_Id();
             break;
         case 3:
-            printf("Retour vers le menu principal.");
+            printf("Retour vers le menu principal.\n");
             break;
         default:
-            printf("!!!!!! Votre choix est invalide !!!!!!");
+            printf("!!!!!! Votre choix est invalide !!!!!!\n");
         }
     } while (choix != 3);
 }
@@ -349,19 +350,19 @@ poste:
         goto poste;
         break;
     }
-    printf("La modification a ete faite avec succes");
+    printf("La modification a ete faite avec succes\n");
 }
 void modifier_age(int position)
 {
-    printf("Entrer le nouveau age du joueur %d: ", equipe[position].id);
+    printf("Entrer le nouveau age du joueur %d: \n", equipe[position].id);
     scanf("%d", &equipe[position].age);
-    printf("La modification a ete faite avec succes"); // repition ds chaque fct
+    printf("La modification a ete faite avec succes\n"); // repition ds chaque fct
 }
 void modifier_numbBut(int position)
 {
-    printf("Entrer le nouveau numero des buts du joueur %d: ", equipe[position].id);
+    printf("Entrer le nouveau numero des buts du joueur %d: \n", equipe[position].id);
     scanf("%d", &equipe[position].but);
-    printf("La modification a ete faite avec succes");
+    printf("La modification a ete faite avec succes\n");
 }
 void modifier_menu()
 {
@@ -400,10 +401,10 @@ void modifier_menu()
                 printf("Joueur non trouve.\n");
             break;
         case 4:
-            printf("Retour vers le menu principal");
+            printf("Retour vers le menu principal\n");
             break;
         default:
-            printf("!!!! Choix invalide !!!!!");
+            printf("!!!! Choix invalide !!!!!\n");
         }
     } while (choix != 4);
 }
@@ -411,12 +412,13 @@ void modifier_menu()
 void supprime_par_id()
 {
     int position, i;
+    char choix;
     position = recherche_par_Id();
-    for (i = position; i < cmpt; i++)
-    {
-        equipe[i] = equipe[i + 1];
-    }
-    cmpt--;
+        for (i = position; i < cmpt; i++)
+        {
+            equipe[i] = equipe[i + 1];
+        }
+        cmpt--;
 }
 void moyen_age()
 {
@@ -449,7 +451,7 @@ void cmp_but()
 
 void meilleur_buteur()
 {
-    int i, n;
+    int i, n=0;
     for (i = 1; i < cmpt; i++)
     {
         if (equipe[i].but > equipe[n].but)
@@ -499,7 +501,7 @@ void statistique_menu()
         switch (choix)
         {
         case 1:
-            printf("Le total des joueurs dans l equipe est : %d", cmpt);
+            printf("Le total des joueurs dans l equipe est : %d\n", cmpt);
             break;
         case 2:
             moyen_age();
@@ -514,10 +516,10 @@ void statistique_menu()
             joueur_age_jeune();
             break;
         case 6:
-            printf("Retour vers le menu principal");
+            printf("Retour vers le menu principal\n");
             break;
         default:
-            printf(" !!!!! Votre choix est invalide !!!!!!!!!");
+            printf(" !!!!! Votre choix est invalide !!!!!!!!!\n");
             break;
         }
 
